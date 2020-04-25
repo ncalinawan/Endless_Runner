@@ -48,7 +48,7 @@ class Play extends Phaser.Scene {
 
         }
         this.clouds.tilePositionX += 1;
-        this.beach.tilePositionX += 4;
+        this.beach.tilePositionX += 6;
     }
 
     crabCollision(){
