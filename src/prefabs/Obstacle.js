@@ -1,6 +1,6 @@
 class Obstacle extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, velocity){
-        super(scene, game.config.width + playerWidth, Phaser.Math.Between(350, 590), 'Trash');
+        super(scene, game.config.width + playerWidth, Phaser.Math.Between(350, 590), 'seaweed');
         scene.add.existing(this);
         scene.physics.add.existing(this);
         this.setVelocityX(velocity);

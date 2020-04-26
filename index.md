@@ -11,6 +11,7 @@
     <script src="./src/scenes/Title.js"></script>
     <script src="./src/scenes/Tutorial.js"></script>
     <script src="./src/scenes/Play.js"></script>
+    <script src="./src/scenes/Gameover.js"></script>
     <script src="./src/main.js"></script>
 
 </body>

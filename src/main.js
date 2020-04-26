@@ -1,3 +1,13 @@
+
+/*
+Communicate how to play w/ clear instructions (5) (Explain what Rave mechanic does in tutorial)
+Include an animated character(s) that use a texture atlas (5)
+Have looping background music (5)
+Use sound effects for key mechanics, UI, and/or significant events according to your design (5)
+Include some metric of accomplishment that a player can improve over time, e.g., score (5)
+Be theoretically endless (5)
+Be playable for at least 15 seconds for a new player of low to moderate skill (5)
+*/
 let config = {
     type: Phaser.CANVAS,
     width: 1200,
@@ -14,7 +24,7 @@ let config = {
             height: 270,
         }
     },
-    scene: [ Title, Play, Tutorial ]
+    scene: [ Title, Play, Tutorial, Gameover ]
 
 }
 
@@ -33,6 +43,7 @@ const playerHeight = 50;
 const playerVelocity = 40;
 let cursors;
 let keyA, keyT, keyF, keyR;
-let level;
+let time;
+let score;
 let highScore;
 let newHighScore = false;
