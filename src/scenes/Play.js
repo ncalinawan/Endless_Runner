@@ -8,6 +8,10 @@ class Play extends Phaser.Scene {
         this.load.image('beach', './assets/tile_background.png');
         this.load.image('clouds', './assets/clouds.png');
         this.load.image('seaweed', './assets/seaweed.png');
+        this.load.image('trash', './assets/trash.png');
+        this.load.image('shells', './assets/shells.png');
+        this.load.image('sc1', './assets/sand_castle.png');
+        this.load.image('sc2', './assets/sand_castle_2.png');
         
     }
 
