@@ -12,19 +12,26 @@ class Play extends Phaser.Scene {
         this.load.image('shells', './assets/shells.png');
         this.load.image('sc1', './assets/sand_castle.png');
         this.load.image('sc2', './assets/sand_castle_2.png');
+        this.load.image('partyhat', './assets/party_hat.png');
         
     }
 
     create(){
-        score = 1;
+        score = 0;
         time = 1;
         this.bgSpeed = 6;
         this.obstacleSpeed = -360;
+
+        this.value = 1;
+
+        this.party = 0;
+        this.partyMax = 2;
 
         cursors = this.input.keyboard.createCursorKeys();
 
         this.beach = this.add.tileSprite(0, 0, 1200, 600, 'beach').setOrigin(0,0);
         this.clouds = this.add.tileSprite(0, 0, 1200, 600, 'clouds').setOrigin(0,0);
+        
 
         let scoreConfig = {
             fontFamily: 'Comic Sans MS',
@@ -39,6 +46,9 @@ class Play extends Phaser.Scene {
             fixedWidth: 150
         }
         this.scoreBoard = this.add.text(1000, 25, score, scoreConfig );
+        this.partyCount = this.add.text(35, 25, this.party, scoreConfig );
+
+        this.partyHat = this.add.image(95, 40, 'partyhat');
 
         this.scoreUp = this.time.addEvent({
             delay: 1000,
@@ -68,6 +78,13 @@ class Play extends Phaser.Scene {
             loop: true
         })
 
+        this.partyTime = this.time.addEvent({
+            delay: 15000,
+            callback: this.partyUp,
+            callbackScope: this,
+            loop: true
+        })
+
 
         crab = this.physics.add.sprite(50, centerY + 175, 'player').setOrigin(0.5);
         crab.setCollideWorldBounds(true);
@@ -80,23 +97,36 @@ class Play extends Phaser.Scene {
         this.addObstacle(); 
 
         keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+        keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         this.gameOver = false;
     } 
     
     
     update(){
         if (!crab.dead && this.gameOver == false){
-            if(cursors.left.isDown){
+            if(cursors.up.isDown){
                 crab.body.velocity.y -= playerVelocity;
-            } else if(cursors.right.isDown){
+            } else if(cursors.down.isDown){
                 crab.body.velocity.y += playerVelocity;
             }
 
             this.scoreBoard.text = score;
+            this.partyCount.text = "x " + this.party;
             this.physics.world.collide(crab, this.obstacleGroup, this.crabCollision, null, this);
             
             this.clouds.tilePositionX -= this.obstacleSpeed/104;
             this.beach.tilePositionX += this.bgSpeed;
+            console.log(this.value);
+            if(Phaser.Input.Keyboard.JustDown(keyR)){
+                if(this.party != 0){
+                    this.party -= 1;
+                    this.value = this.value * 2;
+                    this.valueChange = this.time.delayedCall(10000, () => {
+                        this.valueReset();
+                    }, null, this);
+                }
+            }
+
         }else if(crab.dead == true && this.gameOver == true){
             this.cameras.main.fade(3000);
             this.sceneChange = this.time.delayedCall(3000, () => {
@@ -129,7 +159,15 @@ class Play extends Phaser.Scene {
     }
     scoreAdd(){
         if(this.gameOver == false){
-        score += 1;
+        score += this.value;
+        }
+    }
+
+    partyUp(){
+        if(this.gameOver == false){
+            if(this.party != this.partyMax){
+                this.party += 1;
+            }
         }
     }
 
@@ -144,6 +182,12 @@ class Play extends Phaser.Scene {
     bgSpeedIncrease(){
         if (this.gameOver == false){
             this.bgSpeed += 2;
+        }
+    }
+
+    valueReset(){
+        if (this.gameOver == false){
+            this.value = 1;
         }
     }
 

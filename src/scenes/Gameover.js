@@ -40,8 +40,8 @@ class Gameover extends Phaser.Scene{
             fixedWidth: 150
         }
 
-        this.add.text(325, 357, highScore, scoreConfig ); 
-        this.add.text(275, 427, score, scoreConfig );
+        this.add.text(325, 387, highScore, scoreConfig ); 
+        this.add.text(275, 457, score, scoreConfig );
         keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
     }
