@@ -14,7 +14,7 @@ class Play extends Phaser.Scene {
         this.load.image('sc1', './assets/sand_castle.png');
         this.load.image('sc2', './assets/sand_castle_2.png');
         this.load.image('partyhat', './assets/party_hat.png');
-        this.load.spritesheet('rave', './assets/rave_scrolling.png', {frameWidth: 1200, frameHeight: 600, startFrame: 0, endFrame: 5});
+        this.load.spritesheet('rave', './assets/rave_scrolling.png', {frameWidth: 1200, frameHeight: 600, startFrame: 0, endFrame: 3});
         
     }
 
@@ -38,8 +38,8 @@ class Play extends Phaser.Scene {
         
         this.anims.create({
             key: 'rave',
-            frames: this.anims.generateFrameNumbers('rave', {start: 0, end: 5, first: 0}),
-            frameRate: 3,
+            frames: this.anims.generateFrameNumbers('rave', {start: 0, end: 3, first: 0}),
+            frameRate: 2,
             repeat: 4
         });
 
@@ -89,7 +89,7 @@ class Play extends Phaser.Scene {
         })
 
         this.partyTime = this.time.addEvent({
-            delay: 15000,
+            delay: 5000,
             callback: this.partyUp,
             callbackScope: this,
             loop: true
@@ -126,8 +126,7 @@ class Play extends Phaser.Scene {
             
             this.clouds.tilePositionX -= this.obstacleSpeed/104;
             this.beach.tilePositionX += this.bgSpeed;
-            console.log(this.obstacleSpeed);
-            console.log(this.bgSpeed);
+            console.log(this.value);
             if(Phaser.Input.Keyboard.JustDown(keyR)){
                 if(this.party != 0){
                     this.party -= 1;
