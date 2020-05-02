@@ -4,6 +4,7 @@ class Play extends Phaser.Scene {
     }
 
     preload(){
+       // this.load.atlas('player', './assets/time_for_crab.png', './assets/time_for_crab.json');
         this.load.image('player', './assets/mainCrab.png');
         this.load.image('beach', './assets/tile_background.png');
         this.load.image('clouds', './assets/clouds.png');
@@ -22,6 +23,8 @@ class Play extends Phaser.Scene {
         time = 1;
         this.bgSpeed = 6;
         this.obstacleSpeed = -360;
+        this.bgSpeedMax = 16;
+        this.obstacleSpeedMax = -960;
 
         this.value = 1;
 
@@ -92,7 +95,6 @@ class Play extends Phaser.Scene {
             loop: true
         })
 
-
         crab = this.physics.add.sprite(50, centerY + 175, 'player').setOrigin(0.5);
         crab.setCollideWorldBounds(true);
         crab.setMaxVelocity(0, 200);
@@ -124,7 +126,8 @@ class Play extends Phaser.Scene {
             
             this.clouds.tilePositionX -= this.obstacleSpeed/104;
             this.beach.tilePositionX += this.bgSpeed;
-            console.log(this.value);
+            console.log(this.obstacleSpeed);
+            console.log(this.bgSpeed);
             if(Phaser.Input.Keyboard.JustDown(keyR)){
                 if(this.party != 0){
                     this.party -= 1;
@@ -183,14 +186,19 @@ class Play extends Phaser.Scene {
     speedIncrease(){
         if (this.gameOver == false){
             if(time % 10 == 0) {
+               if(this.obstacleSpeed >= this.obstacleSpeedMax){
                 this.obstacleSpeed -=2;
+                }
             }
+ 
         }
     }
 
     bgSpeedIncrease(){
         if (this.gameOver == false){
+            if(this.bgSpeed <= this.bgSpeedMax){
             this.bgSpeed += 2;
+            }
         }
     }
 
