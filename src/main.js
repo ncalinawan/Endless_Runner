@@ -1,6 +1,5 @@
 
 /*
-Communicate how to play w/ clear instructions (5) (Explain what Rave mechanic does in tutorial)
 Include an animated character(s) that use a texture atlas (5)
 Have looping background music (5)
 Use sound effects for key mechanics, UI, and/or significant events according to your design (5)
@@ -40,5 +39,6 @@ let time;
 let score;
 let highScore;
 let newHighScore = false;
+let bgm;
 
 let obstacleSprites = ['seaweed', 'trash', 'shells', 'sc1', 'sc2'];

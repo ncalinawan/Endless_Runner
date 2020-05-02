@@ -11,28 +11,29 @@ class Title extends Phaser.Scene{
 
     create(){
         this.title = this.add.tileSprite(0,0,1200,600,'title').setOrigin(0,0);
-        this.bgm = this.sound.add('beachsound', {
+        bgm = this.sound.add('beachsound', {
             mute: false,
             volume: 0.07,
             rate: 1,
             loop: true
-        });
-        this.bgm.play();
+        }); 
+        bgm.play();
         keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         keyT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.T);
+        
     }
 
     update(){
 
         if (Phaser.Input.Keyboard.JustDown(keyA)){
             this.scene.start("playScene");
-            this.bgm.stop();
+           bgm.stop();
         }
         
         if (Phaser.Input.Keyboard.JustDown(keyT)){
-            this.bgm.stop();
             this.scene.start("tutorialScene");
            
+            
         }
     }
 }

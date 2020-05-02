@@ -13,6 +13,7 @@ class Play extends Phaser.Scene {
         this.load.image('sc1', './assets/sand_castle.png');
         this.load.image('sc2', './assets/sand_castle_2.png');
         this.load.image('partyhat', './assets/party_hat.png');
+        this.load.spritesheet('rave', './assets/rave_scrolling.png', {frameWidth: 1200, frameHeight: 600, startFrame: 0, endFrame: 5});
         
     }
 
@@ -32,6 +33,12 @@ class Play extends Phaser.Scene {
         this.beach = this.add.tileSprite(0, 0, 1200, 600, 'beach').setOrigin(0,0);
         this.clouds = this.add.tileSprite(0, 0, 1200, 600, 'clouds').setOrigin(0,0);
         
+        this.anims.create({
+            key: 'rave',
+            frames: this.anims.generateFrameNumbers('rave', {start: 0, end: 5, first: 0}),
+            frameRate: 3,
+            repeat: 4
+        });
 
         let scoreConfig = {
             fontFamily: 'Comic Sans MS',
@@ -89,6 +96,7 @@ class Play extends Phaser.Scene {
         crab = this.physics.add.sprite(50, centerY + 175, 'player').setOrigin(0.5);
         crab.setCollideWorldBounds(true);
         crab.setMaxVelocity(0, 200);
+        crab.setDepth(1);
         crab.dead = false;
 
         this.obstacleGroup = this.add.group({
@@ -124,6 +132,7 @@ class Play extends Phaser.Scene {
                     this.valueChange = this.time.delayedCall(10000, () => {
                         this.valueReset();
                     }, null, this);
+                    this.raveScreen();
                 }
             }
 
@@ -189,6 +198,14 @@ class Play extends Phaser.Scene {
         if (this.gameOver == false){
             this.value = 1;
         }
+    }
+
+    raveScreen(){
+        let rave = this.add.sprite(0, 0, 'rave').setOrigin(0,0);
+        rave.anims.play('rave');
+        rave.on('animationcomplete', () =>{
+            rave.destroy();
+        })
     }
 
 }
