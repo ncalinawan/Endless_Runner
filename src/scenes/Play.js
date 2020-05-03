@@ -243,11 +243,25 @@ class Play extends Phaser.Scene {
     }
 
     raveScreen(){
-        let rave = this.add.sprite(0, 0, 'rave').setOrigin(0,0);
+        let rave = this.add.sprite(0, 0, 'rave').setOrigin(0,0); 
         rave.anims.play('rave');
+        crab.destroy(); 
+        crab = this.physics.add.sprite(crab.x, crab.y, 'party','party_crab1').setScale(0.2).play('party');
+        crab.setCollideWorldBounds(true);
+        crab.setMaxVelocity(0, 200);
+        crab.setDepth(1);
+        crab.dead = false;
+
+
         rave.on('animationcomplete', () =>{
             rave.destroy();
+            crab.destroy();
+            crab = this.physics.add.sprite(crab.x, crab.y, 'crabwalk','crab1').setScale(0.2).play('walk');
+            crab.setCollideWorldBounds(true);
+            crab.setMaxVelocity(0, 200);
+            crab.setDepth(1);
+            crab.dead = false;
+
         })
-    }
 
 }
