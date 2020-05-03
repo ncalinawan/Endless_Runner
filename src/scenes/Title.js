@@ -4,27 +4,28 @@ class Title extends Phaser.Scene{
     }
 
     preload(){
+        
         this.load.image('title_screen', './assets/title_screen.png');
         this.load.audio('beachsound', './assets/beachSounds.wav');
-        //"Ambience, Seaside Waves, Close, A.wav" by InspectorJ (www.jshaw.co.uk) of Freesound.org
-        this.load.atlas('waves', './assets/title(1).png', './assets/waves.json');
         
+        this.load.atlas('waves', './assets/waves.png', './assets/waves.json');
+        //"Ambience, Seaside Waves, Close, A.wav" by InspectorJ (www.jshaw.co.uk) of Freesound.org
+
     }
 
     create(){
-        this.title = this.add.tileSprite(0,0,1200,600,'title').setOrigin(0,0);
+
         this.title = this.add.tileSprite(0,0,1200,600,'title_screen').setOrigin(0,0);
-        
-        //animation is still rough i'll  go fix it soon 
-        //create animations using the json + png files and then have phaser generate frames for you -----------------------------
+
+        //create animations using the json + png files and then have phaser generate frames for you 
         this.anims.create({ 
             key: 'ocean', 
             frames: this.anims.generateFrameNames('waves', {
-                prefix: 'title',
+                prefix: 'wave_',
                 start: 1,
-                end: 6
+                end: 17
             }),
-            frameRate: 3, 
+            frameRate: 5, 
             repeat: -1
         });
 
@@ -32,10 +33,11 @@ class Title extends Phaser.Scene{
         console.log(this.anims.generateFrameNames('waves'));
         
         //you can add in the atlas sprite + play the animation in one go 
-        this.add.sprite(600, 250, 'waves', 'title1').play('ocean');
-        
-        //-----------------------------------------------------------------------------------------------------------------------
-        
+        this.add.sprite(600, 250, 'waves', 'wave_1').play('ocean');
+
+
+        //create sprite and add in animation
+
         bgm = this.sound.add('beachsound', {
             mute: false,
             volume: 0.07,
@@ -58,7 +60,6 @@ class Title extends Phaser.Scene{
         if (Phaser.Input.Keyboard.JustDown(keyT)){
             this.scene.start("tutorialScene");
            
-            
         }
     }
 }
