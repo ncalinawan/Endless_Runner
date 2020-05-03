@@ -4,12 +4,14 @@ class Play extends Phaser.Scene {
     }
 
     preload(){
-       // this.load.atlas('player', './assets/time_for_crab.png', './assets/time_for_crab.json');
-        //atlas -------------------------------------------------------------------------------------------------
+        //atlases
         this.load.atlas('crabwalk', './assets/crabwalk.png', './assets/crabwalk.json');
-        this.load.atlas('party_crabwalk', './assets/time_for_party_crab.png', './assets/party_crab.json');
-        //-------------------------------------------------------------------------------------------------------
-        
+        this.load.atlas('party', './assets/time_for_party_crab.png', './assets/party_crab.json');
+
+        //sound
+        this.load.audio('bonk','./assets/bonk.wav');
+
+        //image files
         this.load.image('player', './assets/mainCrab.png');
         this.load.image('beach', './assets/tile_background.png');
         this.load.image('clouds', './assets/clouds.png');
@@ -19,7 +21,7 @@ class Play extends Phaser.Scene {
         this.load.image('sc1', './assets/sand_castle.png');
         this.load.image('sc2', './assets/sand_castle_2.png');
         this.load.image('partyhat', './assets/party_hat.png');
-        this.load.spritesheet('rave', './assets/crab rave bg.png', {frameWidth: 1200, frameHeight: 600, startFrame: 0, endFrame: 3});
+        this.load.spritesheet('rave', './assets/rave_scrolling.png', {frameWidth: 1200, frameHeight: 600, startFrame: 0, endFrame: 3});
         
     }
 
@@ -38,17 +40,18 @@ class Play extends Phaser.Scene {
 
         cursors = this.input.keyboard.createCursorKeys();
 
+        //tilesprites
         this.beach = this.add.tileSprite(0, 0, 1200, 600, 'beach').setOrigin(0,0);
         this.clouds = this.add.tileSprite(0, 0, 1200, 600, 'clouds').setOrigin(0,0);
         
+        //animations ---------------------------------------------------------------------------------------------------------------------------
         this.anims.create({
             key: 'rave',
             frames: this.anims.generateFrameNumbers('rave', {start: 0, end: 3, first: 0}),
             frameRate: 2,
             repeat: 4
         });
-        
-        //Crabwalk & Party Crabwalk animation ----------------------------------------------------------------------
+
         this.anims.create({ 
             key: 'walk', 
             frames: this.anims.generateFrameNames('crabwalk', {
@@ -70,9 +73,10 @@ class Play extends Phaser.Scene {
             frameRate: 5, 
             repeat: -1
         });
-        
-        // ----------------------------------------------------------------------------------------
 
+        console.log(this.anims.generateFrameNames('party'));
+
+        //score text
         let scoreConfig = {
             fontFamily: 'Comic Sans MS',
             fontSize: '28px',
@@ -124,13 +128,10 @@ class Play extends Phaser.Scene {
             callbackScope: this,
             loop: true
         })
-        
-        //-------------------------------------------------------------------------------------------
-        //This is the crab used for animation 
-        let testCrab = this.add.sprite(50,50,'crabwalk','crab1').setOrigin(0,0).play('walk');
-        //-------------------------------------------------------------------------------------------
-        
-        //crab = this.physics.add.sprite(50, centerY + 175, 'player').setOrigin(0.5);
+
+        //crabs
+        //let testCrab = this.add.sprite(50,50,'crabwalk','crab1').setOrigin(0,0).play('walk');
+        crab = this.physics.add.sprite(50, centerY + 175, 'crabwalk','crab1').setScale(0.2).play('walk');
         crab.setCollideWorldBounds(true);
         crab.setMaxVelocity(0, 200);
         crab.setDepth(1);
@@ -159,9 +160,12 @@ class Play extends Phaser.Scene {
             this.partyCount.text = "x " + this.party;
             this.physics.world.collide(crab, this.obstacleGroup, this.crabCollision, null, this);
             
+            //setting up parallax
             this.clouds.tilePositionX -= this.obstacleSpeed/104;
             this.beach.tilePositionX += this.bgSpeed;
             console.log(this.value);
+
+            //rave implementation
             if(Phaser.Input.Keyboard.JustDown(keyR)){
                 if(this.party != 0){
                     this.party -= 1;
@@ -263,5 +267,6 @@ class Play extends Phaser.Scene {
             crab.dead = false;
 
         })
+    }
 
 }
