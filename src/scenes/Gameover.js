@@ -5,6 +5,10 @@ class Gameover extends Phaser.Scene{
 
     preload(){
         this.load.image('gameover', './assets/game_over.png');
+
+        //sound
+        //"Ambience, busy restaurant USA" by Audio Hero (www.zapsplat.com/music/ambience-busy-restaurant-usa/) on zapsplat.com
+        this.load.audio('game_over', './assets/restaurant_gameover.wav');
     }
 
     create(){
@@ -41,6 +45,14 @@ class Gameover extends Phaser.Scene{
             fixedWidth: 150
         }
 
+        bgm = this.sound.add('game_over', {
+            mute: false,
+            volume: 0.07,
+            rate: 1,
+            loop: true
+        }); 
+        bgm.play();
+
         this.add.text(325, 387, highScore, scoreConfig ); 
         this.add.text(275, 457, score, scoreConfig );
         keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
@@ -54,6 +66,7 @@ class Gameover extends Phaser.Scene{
             this.sceneChange = this.time.delayedCall(3000, () => {
                 this.scene.start("playScene");
             }, null, this);
+            bgm.stop();
         }
 
         //back to title screen
@@ -62,6 +75,7 @@ class Gameover extends Phaser.Scene{
             this.sceneChange = this.time.delayedCall(3000, () => {
                 this.scene.start("titleScene");
             }, null, this);
+            bgm.stop();
         }
 
     }
