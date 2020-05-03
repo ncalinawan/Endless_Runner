@@ -48,11 +48,22 @@ class Play extends Phaser.Scene {
             repeat: 4
         });
         
-        //Crabwalk animation ----------------------------------------------------------------------
+        //Crabwalk & Party Crabwalk animation ----------------------------------------------------------------------
         this.anims.create({ 
             key: 'walk', 
             frames: this.anims.generateFrameNames('crabwalk', {
                 prefix: 'crab',
+                start: 1,
+                end: 2
+            }),
+            frameRate: 5, 
+            repeat: -1
+        });
+        
+        this.anims.create({ 
+            key: 'party', 
+            frames: this.anims.generateFrameNames('party', {
+                prefix: 'party_crab',
                 start: 1,
                 end: 2
             }),
