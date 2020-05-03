@@ -14,7 +14,7 @@ class Play extends Phaser.Scene {
         this.load.image('sc1', './assets/sand_castle.png');
         this.load.image('sc2', './assets/sand_castle_2.png');
         this.load.image('partyhat', './assets/party_hat.png');
-        this.load.spritesheet('rave', './assets/rave_scrolling.png', {frameWidth: 1200, frameHeight: 600, startFrame: 0, endFrame: 3});
+        this.load.spritesheet('rave', './assets/crab rave bg.png', {frameWidth: 1200, frameHeight: 600, startFrame: 0, endFrame: 3});
         
     }
 
