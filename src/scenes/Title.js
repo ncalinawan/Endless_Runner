@@ -30,7 +30,7 @@ class Title extends Phaser.Scene{
         });
 
         //you can type this command to check your frame names so everything loads in properly 
-        console.log(this.anims.generateFrameNames('waves'));
+        // console.log(this.anims.generateFrameNames('waves'));
         
         //you can add in the atlas sprite + play the animation in one go 
         this.add.sprite(600, 250, 'waves', 'wave_1').play('ocean');
@@ -52,11 +52,13 @@ class Title extends Phaser.Scene{
 
     update(){
 
+        //A for start
         if (Phaser.Input.Keyboard.JustDown(keyA)){
             this.scene.start("playScene");
            bgm.stop();
         }
         
+        //T for tutorial
         if (Phaser.Input.Keyboard.JustDown(keyT)){
             this.scene.start("tutorialScene");
            

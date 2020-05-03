@@ -10,6 +10,8 @@ class Play extends Phaser.Scene {
 
         //sound
         this.load.audio('bonk','./assets/bonk.wav');
+        this.load.audio('beachMusic', './assets/beachMusic.wav');
+        this.load.audio('beachRave', './assets/beachRave.wav');
 
         //image files
         this.load.image('player', './assets/mainCrab.png');
@@ -33,17 +35,35 @@ class Play extends Phaser.Scene {
         this.bgSpeedMax = 16;
         this.obstacleSpeedMax = -960;
 
-        this.value = 1;
+        this.value = 1; //Score multiplier
 
+        //count for party hats
         this.party = 0;
         this.partyMax = 2;
-
+        this.ravePlaying = 0;
+        
         cursors = this.input.keyboard.createCursorKeys();
 
         //tilesprites
         this.beach = this.add.tileSprite(0, 0, 1200, 600, 'beach').setOrigin(0,0);
         this.clouds = this.add.tileSprite(0, 0, 1200, 600, 'clouds').setOrigin(0,0);
+
+        //audio ----------------------------------------------------------------------------------------------------------------------------
+        bgm = this.sound.add('beachMusic', {
+            mute: false,
+            volume: 0.07,
+            rate: 1,
+            loop: true
+        }); 
+        bgm.play();
         
+        raveMusic = this.sound.add('beachRave', {
+            mute: false,
+            volume: 0.07,
+            rate: 1,
+            loop: true
+        }); 
+
         //animations ---------------------------------------------------------------------------------------------------------------------------
         this.anims.create({
             key: 'rave',
@@ -74,7 +94,7 @@ class Play extends Phaser.Scene {
             repeat: -1
         });
 
-        console.log(this.anims.generateFrameNames('party'));
+        //console.log(this.anims.generateFrameNames('party'));
 
         //score text
         let scoreConfig = {
@@ -90,10 +110,12 @@ class Play extends Phaser.Scene {
             fixedWidth: 150
         }
         this.scoreBoard = this.add.text(1000, 25, score, scoreConfig );
-        this.partyCount = this.add.text(35, 25, this.party, scoreConfig );
 
+        //display how many party hats available
+        this.partyCount = this.add.text(35, 25, this.party, scoreConfig );
         this.partyHat = this.add.image(95, 40, 'partyhat');
 
+        //adds points every second
         this.scoreUp = this.time.addEvent({
             delay: 1000,
             callback: this.scoreAdd,
@@ -101,6 +123,7 @@ class Play extends Phaser.Scene {
             loop: true
         })
 
+        //tracks time
         this.timeUp = this.time.addEvent({
             delay: 1000,
             callback: this.timeAdd,
@@ -108,6 +131,7 @@ class Play extends Phaser.Scene {
             loop: true
         })
 
+        //speeds up obstacles
         this.speedUp = this.time.addEvent({
             delay: 10,
             callback: this.speedIncrease,
@@ -115,6 +139,7 @@ class Play extends Phaser.Scene {
             loop: true
         })
 
+        //speeds up background
         this.bgUp = this.time.addEvent({
             delay: 10000,
             callback: this.bgSpeedIncrease,
@@ -122,21 +147,31 @@ class Play extends Phaser.Scene {
             loop: true
         })
 
+        //after 30 seconds, player gains more speed control
+        this.playerUp = this.time.addEvent({
+            delay: 30000,
+            callback: this.playerIncrease,
+            callbackScope: this,
+            loop: false
+        })
+
+        //gives party hat every 15 seconds
         this.partyTime = this.time.addEvent({
-            delay: 5000,
+            delay: 15000,
             callback: this.partyUp,
             callbackScope: this,
             loop: true
         })
 
+
         //crabs
-        //let testCrab = this.add.sprite(50,50,'crabwalk','crab1').setOrigin(0,0).play('walk');
         crab = this.physics.add.sprite(50, centerY + 175, 'crabwalk','crab1').setScale(0.2).play('walk');
         crab.setCollideWorldBounds(true);
         crab.setMaxVelocity(0, 200);
         crab.setDepth(1);
         crab.dead = false;
 
+        //obstacles
         this.obstacleGroup = this.add.group({
             runChildUpdate: true
         });
@@ -150,14 +185,19 @@ class Play extends Phaser.Scene {
     
     update(){
         if (!crab.dead && this.gameOver == false){
+            
+            //move up and down
             if(cursors.up.isDown){
                 crab.body.velocity.y -= playerVelocity;
             } else if(cursors.down.isDown){
                 crab.body.velocity.y += playerVelocity;
             }
-
+            
+            //updates text on screen
             this.scoreBoard.text = score;
             this.partyCount.text = "x " + this.party;
+            
+            //collisions
             this.physics.world.collide(crab, this.obstacleGroup, this.crabCollision, null, this);
             
             //setting up parallax
@@ -169,22 +209,30 @@ class Play extends Phaser.Scene {
             if(Phaser.Input.Keyboard.JustDown(keyR)){
                 if(this.party != 0){
                     this.party -= 1;
+                    if(this.value < 2){
+                        this.valueChange = this.time.delayedCall(10000, () => {
+                            this.valueReset();
+                        }, null, this);
+                }
                     this.value = this.value * 2;
-                    this.valueChange = this.time.delayedCall(10000, () => {
-                        this.valueReset();
-                    }, null, this);
                     this.raveScreen();
                 }
             }
-
+        
+            //gameover
         }else if(crab.dead == true && this.gameOver == true){
+            bgm.stop();
+            raveMusic.stop();
             this.cameras.main.fade(3000);
             this.sceneChange = this.time.delayedCall(3000, () => {
                 this.scene.start("gameover");
             }, null, this);
         }
 
+        //restarts game
         if (Phaser.Input.Keyboard.JustDown(keyA)){
+            bgm.stop();
+            raveMusic.stop();
             this.scene.start("playScene");
         }
         
@@ -192,6 +240,7 @@ class Play extends Phaser.Scene {
 
     crabCollision(){
         crab.dead = true;
+        this.sound.play('bonk');
         crab.destroy();
         this.gameOver = true;
         this.obstacleSpeed -= this.obstacleSpeed;
@@ -240,6 +289,12 @@ class Play extends Phaser.Scene {
         }
     }
 
+    playerIncrease(){
+        if (this.gameOver == false){
+            crab.setMaxVelocity(0,400);
+        }
+    }
+
     valueReset(){
         if (this.gameOver == false){
             this.value = 1;
@@ -247,15 +302,22 @@ class Play extends Phaser.Scene {
     }
 
     raveScreen(){
-        let rave = this.add.sprite(0, 0, 'rave').setOrigin(0,0); 
+        if (this.ravePlaying == 0){
+        let rave = this.add.sprite(0, 0, 'rave').setOrigin(0,0);
         rave.anims.play('rave');
+       
         crab.destroy(); 
         crab = this.physics.add.sprite(crab.x, crab.y, 'party','party_crab1').setScale(0.2).play('party');
         crab.setCollideWorldBounds(true);
         crab.setMaxVelocity(0, 200);
         crab.setDepth(1);
         crab.dead = false;
-
+        bgm.pause();
+        
+        if (this.ravePlaying == 0){
+        raveMusic.play();
+        this.ravePlaying = 1;
+        }
 
         rave.on('animationcomplete', () =>{
             rave.destroy();
@@ -265,8 +327,12 @@ class Play extends Phaser.Scene {
             crab.setMaxVelocity(0, 200);
             crab.setDepth(1);
             crab.dead = false;
+            bgm.resume();
+            this.ravePlaying = 0;
+            raveMusic.stop();
 
         })
+        }
     }
 
 }

@@ -11,6 +11,7 @@ class Gameover extends Phaser.Scene{
         this.cameras.main.fadeIn(3000);
         this.gameover = this.add.tileSprite(0,0,1200,600, 'gameover').setOrigin(0,0);
         
+        //highscore tracker by the legendary Nathan Altice :)
         if(localStorage.getItem('hiscore') != null) {
             let storedScore = parseInt(localStorage.getItem('hiscore'));
             if(score > storedScore) {
@@ -47,6 +48,7 @@ class Gameover extends Phaser.Scene{
     }
 
     update(){
+        //play again
         if (Phaser.Input.Keyboard.JustDown(keyA)){
             this.cameras.main.fade(3000);
             this.sceneChange = this.time.delayedCall(3000, () => {
@@ -54,6 +56,7 @@ class Gameover extends Phaser.Scene{
             }, null, this);
         }
 
+        //back to title screen
         if (Phaser.Input.Keyboard.JustDown(keyF)){
             this.cameras.main.fade(3000);
             this.sceneChange = this.time.delayedCall(3000, () => {
