@@ -5,6 +5,11 @@ class Play extends Phaser.Scene {
 
     preload(){
        // this.load.atlas('player', './assets/time_for_crab.png', './assets/time_for_crab.json');
+        //atlas -------------------------------------------------------------------------------------------------
+        this.load.atlas('crabwalk', './assets/crabwalk.png', './assets/crabwalk.json');
+        this.load.atlas('party_crabwalk', './assets/time_for_party_crab.png', './assets/party_crab.json');
+        //-------------------------------------------------------------------------------------------------------
+        
         this.load.image('player', './assets/mainCrab.png');
         this.load.image('beach', './assets/tile_background.png');
         this.load.image('clouds', './assets/clouds.png');
@@ -42,6 +47,20 @@ class Play extends Phaser.Scene {
             frameRate: 2,
             repeat: 4
         });
+        
+        //Crabwalk animation ----------------------------------------------------------------------
+        this.anims.create({ 
+            key: 'walk', 
+            frames: this.anims.generateFrameNames('crabwalk', {
+                prefix: 'crab',
+                start: 1,
+                end: 2
+            }),
+            frameRate: 5, 
+            repeat: -1
+        });
+        
+        // ----------------------------------------------------------------------------------------
 
         let scoreConfig = {
             fontFamily: 'Comic Sans MS',
@@ -94,8 +113,13 @@ class Play extends Phaser.Scene {
             callbackScope: this,
             loop: true
         })
-
-        crab = this.physics.add.sprite(50, centerY + 175, 'player').setOrigin(0.5);
+        
+        //-------------------------------------------------------------------------------------------
+        //This is the crab used for animation 
+        let testCrab = this.add.sprite(50,50,'crabwalk','crab1').setOrigin(0,0).play('walk');
+        //-------------------------------------------------------------------------------------------
+        
+        //crab = this.physics.add.sprite(50, centerY + 175, 'player').setOrigin(0.5);
         crab.setCollideWorldBounds(true);
         crab.setMaxVelocity(0, 200);
         crab.setDepth(1);
