@@ -9,8 +9,14 @@ class Play extends Phaser.Scene {
         this.load.atlas('party', './assets/time_for_party_crab.png', './assets/party_crab.json');
 
         //sound
+        //"Caveman Bonk" (www.myinstants.com/instant/caveman-bonk-91720/) on myinstants.com
         this.load.audio('bonk','./assets/bonk.wav');
+        /*
+        "Carnival Cavalcade – Sunshine filled Reggae with deep bass guitar and rasping sax that brings the street party directly to wherever you are" by David-Gwyn Jones
+        (www.zapsplat.com/music/carnival-cavalcade-sunshine-filled-reggae-with-deep-bass-guitar-and-rasping-sax-that-brings-the-street-party-directly-to-wherever-you-are/) of zapsplat.com
+        */
         this.load.audio('beachMusic', './assets/beachMusic.wav');
+        //"instant rave" by supervans (www.freesound.org/people/supervanz/sounds/434166/) on freesound.org
         this.load.audio('beachRave', './assets/beachRave.wav');
 
         //image files
