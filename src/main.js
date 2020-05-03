@@ -1,4 +1,14 @@
+/* Title
+Created by: Mai Ngyuen, Kiara Yupangco, and Noel Calinawan
+Date Completed: May 3rd oops LOL
 
+We included a mechanic that lets you multiply point gain by raving WOOOO! (optimal way is to stock up 2 party hats,
+and right before it checks to see that your party hat count is full, use both party hats plus a third that you recently obtain
+to get an 8x multiplier!) Our entire group struggled with how to use the JSON file, but we fought through it and figured it out
+as a team :)
+
+We borrowed music which is cited where it is loaded, but we created all the art for the game, to create a cool and fun aesthetic!
+*/
 let config = {
     type: Phaser.CANVAS,
     width: 1200,
