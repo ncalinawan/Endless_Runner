@@ -7,6 +7,20 @@ class Gameover extends Phaser.Scene{
         this.cameras.main.fadeIn(3000);
         this.gameover = this.add.tileSprite(0,0,1200,600, 'gameover').setOrigin(0,0);
         
+        //sparkle animation || big thanks to my roommate for helping me animate :^D
+        this.anims.create({                      
+            key: 'sparkle', 
+            frames: this.anims.generateFrameNames('sparkle', {
+                prefix: 'sparkle_',
+                start: 1,
+                end: 2
+                }),
+                frameRate: 5, 
+                repeat: -1
+            });
+        
+        this.add.sprite(600, 250, 'sparkles', 'sparkle_1').play('sparkle');
+        
         //highscore tracker by the legendary Nathan Altice :)
         if(localStorage.getItem('hiscore') != null) {
             let storedScore = parseInt(localStorage.getItem('hiscore'));
