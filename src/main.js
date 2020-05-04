@@ -9,6 +9,9 @@ to get an 8x multiplier!) Our entire group struggled with how to use the JSON fi
 as a team :)
 
 We borrowed music which is cited where it is loaded, but we created all the art for the game, to create a cool and fun aesthetic!
+
+We added some sort of challenge to the game by making the crab's movement intentionally drift after pressing the up or down button. 
+It's because it encourages players to think fast to move away from the obstacles while partying. This crab parties hard, so don't let them crash!
 */
 let config = {
     type: Phaser.CANVAS,
