@@ -5,7 +5,7 @@ class Tutorial extends Phaser.Scene{
 
     create(){
         this.tutorial = this.add.tileSprite(0,0,1200,600, 'tutorial').setOrigin(0,0);
-        this.screenChange = this.time.delayedCall(3000, () => {
+        this.screenChange = this.time.delayedCall(4000, () => {
             this.tutorial2 = this.add.tileSprite(0,0,1200,600, 'tutorial2').setOrigin(0,0);
         }, null, this);
 
