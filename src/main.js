@@ -25,7 +25,7 @@ let config = {
             height: 270,
         }
     },
-    scene: [ Title, Play, Tutorial, Gameover ]
+    scene: [ Load, Title, Play, Tutorial, Gameover ]
 
 }
 

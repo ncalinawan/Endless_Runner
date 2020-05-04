@@ -3,17 +3,6 @@ class Title extends Phaser.Scene{
         super("titleScene");
     }
 
-    preload(){
-        
-        this.load.image('title_screen', './assets/title_screen.png');
-        this.load.atlas('waves', './assets/waves.png', './assets/waves.json');
-        
-        //sound
-        //"Ambience, Seaside Waves, Close, A.wav" by InspectorJ (www.jshaw.co.uk) on freesound.org
-        this.load.audio('beachsound', './assets/beachSounds.wav');
-
-    }
-
     create(){
 
         this.title = this.add.tileSprite(0,0,1200,600,'title_screen').setOrigin(0,0);

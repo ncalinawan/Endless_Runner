@@ -3,11 +3,6 @@ class Tutorial extends Phaser.Scene{
         super("tutorialScene");
     }
 
-    preload(){
-        this.load.image('tutorial', './assets/tutorialscreen.png');
-        this.load.image('tutorial2', './assets/tutorialscreen2.png');
-    }
-
     create(){
         this.tutorial = this.add.tileSprite(0,0,1200,600, 'tutorial').setOrigin(0,0);
         this.screenChange = this.time.delayedCall(3000, () => {

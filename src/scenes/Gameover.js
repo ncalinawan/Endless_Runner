@@ -3,14 +3,6 @@ class Gameover extends Phaser.Scene{
         super("gameover");
     }
 
-    preload(){
-        this.load.image('gameover', './assets/game_over.png');
-
-        //sound
-        //"Ambience, busy restaurant USA" by Audio Hero (www.zapsplat.com/music/ambience-busy-restaurant-usa/) on zapsplat.com
-        this.load.audio('game_over', './assets/restaurant_gameover.wav');
-    }
-
     create(){
         this.cameras.main.fadeIn(3000);
         this.gameover = this.add.tileSprite(0,0,1200,600, 'gameover').setOrigin(0,0);
