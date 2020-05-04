@@ -10,6 +10,8 @@ class Load extends Phaser.Scene{
          this.load.atlas('waves', './assets/waves.png', './assets/waves.json');
          this.load.atlas('crabwalk', './assets/crabwalk.png', './assets/crabwalk.json');
          this.load.atlas('party', './assets/time_for_party_crab.png', './assets/party_crab.json');
+         this.load.atlas('load','./assets/loading.png','./assets/loading.json');
+         this.load.atlas('sparkle','./assets/sparkles.png','./assets/sparkles.json');
         
          //image files
          this.load.image('loading', './assets/loading_screen.png');   
@@ -54,6 +56,19 @@ class Load extends Phaser.Scene{
 
     create(){
         this.load = this.add.image(0,0, 'loading').setOrigin(0,0);
+        
+        this.anims.create({ 
+            key: 'load', 
+            frames: this.anims.generateFrameNames('load', {
+                prefix: 'loading_',
+                start: 1,
+                end: 2
+            }),
+            frameRate: 3, 
+            repeat: -1
+        });
+
+        this.add.sprite(590, 300, 'load', 'loading_1').play('load');
 
         this.sceneChange = this.time.delayedCall(5000, () => {
             this.scene.start("titleScene");
