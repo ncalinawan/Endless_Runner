@@ -1,5 +1,6 @@
 /* Title
 Created by: Mai Ngyuen, Kiara Yupangco, and Noel Calinawan
+Game Title: Crab Runner
 Date Completed: May 3rd oops LOL
 
 We included a mechanic that lets you multiply point gain by raving WOOOO! (optimal way is to stock up 2 party hats,
